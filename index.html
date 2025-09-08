@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Tracker</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jacquard+12&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="pixel-trail" class="pixel-trail"></div>
+    <div class="app">
+        <header class="app__header">
+            <h1 class="app__title">Task Tracker</h1>
+        </header>
+        
+        <div class="app__input-section">
+            <div class="input-group">
+                <input type="text" id="taskInput" class="input-group__field" placeholder="What needs to be done?" maxlength="50">
+                <button id="addTaskBtn" class="input-group__button" title="Or press enter">Add Task</button>
+            </div>
+        </div>
+        
+        
+        <div class="app__tasks-section">
+            <ul id="tasksList" class="tasks-list">
+            </ul>
+        </div>
+
+        <div class="app__filter-section">
+            <div class="filter-section">
+                <div class="filter-buttons">
+                    <div class="filter-section__counter">
+                        <span class="filter-section__number" id="pendingTasks">0</span>
+                        <span class="filter-section__label">items left</span>
+                    </div>
+                    <button class="filter-buttons__button filter-buttons__button--active" data-filter="all">All</button>
+                    <button class="filter-buttons__button" data-filter="pending">Active</button>
+                    <button class="filter-buttons__button" data-filter="completed">Completed</button>
+                    <button class="filter-buttons__button filter-buttons__button--clear" id="clearCompletedBtn" style="display: none;">Clear completed</button>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="app__empty-state" id="emptyState">
+            <div class="app__empty-icon">📝</div>
+            <p class="app__empty-text">No tasks yet. Add your first task!</p>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
