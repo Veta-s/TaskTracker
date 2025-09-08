@@ -19,7 +19,7 @@
         
         <div class="app__input-section">
             <div class="input-group">
-                <input type="text" id="taskInput" class="input-group__field" placeholder="What needs to be done?" maxlength="50">
+                <input type="text" id="taskInput" class="input-group__field" placeholder="What needs to be done?" maxlength="50" aria-label="Task input field">
                 <button id="addTaskBtn" class="input-group__button" title="Or press enter">Add Task</button>
             </div>
         </div>
@@ -32,16 +32,16 @@
 
         <div class="app__filter-section">
             <div class="filter-section">
+                <div class="filter-section__counter">
+                    <span class="filter-section__number" id="pendingTasks">0</span>
+                    <span class="filter-section__label">items left</span>
+                </div>
                 <div class="filter-buttons">
-                    <div class="filter-section__counter">
-                        <span class="filter-section__number" id="pendingTasks">0</span>
-                        <span class="filter-section__label">items left</span>
-                    </div>
                     <button class="filter-buttons__button filter-buttons__button--active" data-filter="all">All</button>
                     <button class="filter-buttons__button" data-filter="pending">Active</button>
                     <button class="filter-buttons__button" data-filter="completed">Completed</button>
-                    <button class="filter-buttons__button filter-buttons__button--clear" id="clearCompletedBtn" style="display: none;">Clear completed</button>
                 </div>
+                <button class="filter-section__clear-button" id="clearCompletedBtn" style="visibility: hidden">Clear completed</button>
             </div>
         </div>
         

@@ -31,6 +31,8 @@ body {
     border-radius: 50%;
     opacity: 0.8;
     animation: scatter 2s ease-out forwards;
+    --scatter-x: 0px;
+    --scatter-y: 0px;
 }
 
 .pixel-trail__pixel--red {
@@ -38,6 +40,8 @@ body {
     width: 4px;
     height: 4px;
     animation: scatter 1.5s ease-out forwards;
+    --scatter-x: 0px;
+    --scatter-y: 0px;
 }
 
 @keyframes scatter {
@@ -69,7 +73,6 @@ body {
     color: #333;
     font-size: 4rem;
     font-weight: 400;
-    margin-bottom: 20px;
 }
 
 /* App Input Section */
@@ -121,10 +124,6 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
 }
 
 .filter-section__number {
@@ -146,13 +145,20 @@ body {
     margin-bottom: 20px;
 }
 
+/* Filter Section */
+.filter-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
 /* Filter Buttons */
 .filter-buttons {
     display: flex;
     gap: 10px;
     align-items: center;
     justify-content: center;
-    position: relative;
 }
 
 .filter-buttons__button {
@@ -184,23 +190,23 @@ body {
     transform: translateY(1px);
 }
 
-.filter-buttons__button--clear {
+.filter-section__clear-button {
     color: #333;
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
     border: none;
     background: transparent;
     padding: 8px 0;
+    cursor: pointer;
+    font-size: 0.9rem;
+    min-width: 120px;
+    text-align: right;
 }
 
-.filter-buttons__button--clear:hover {
+.filter-section__clear-button:hover {
     color: #c82333;
     background: transparent;
 }
 
-.filter-buttons__button--clear:active {
+.filter-section__clear-button:active {
     color: #a71e2a;
     transform: translateY(1px);
 }
@@ -243,6 +249,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .tasks-list__checkbox--checked {
@@ -320,36 +328,129 @@ body {
     display: none !important;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
+/* Mobile 360px */
+@media (max-width: 360px) {
     .app {
-        padding: 15px;
+        padding: 10px;
     }
     
     .app__title {
-        font-size: 2.5rem;
+        font-size: 3rem;
     }
     
-    .input-group {
+    .app__input-section {
+        padding: 15px;
+    }
+    
+    .input-group__field {
+        font-size: 14px;
+        padding: 8px;
+    }
+    
+    .input-group__button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+    
+    .app__filter-section {
+        padding: 10px;
+    }
+    
+    .filter-section {
+        display: flex;
         flex-direction: column;
+        align-items: center;
     }
     
-    .stats {
-        flex-direction: column;
-        gap: 10px;
+    .filter-section__counter {
+        gap: 5px;
+        margin-bottom: 15px;
+        justify-content: center;
     }
     
-    .filter-buttons {
-        flex-wrap: wrap;
+    .filter-section__number {
+        font-size: 1rem;
+    }
+    
+    .filter-section__label {
+        font-size: 0.8rem;
+    }
+    
+    .filter-buttons__button {
+        padding: 6px 12px;
+        font-size: 12px;
+        margin: 0 3px;
+    }
+    
+    .filter-section__clear-button {
+        font-size: 11px;
+        padding: 10px 0;
+        min-width: 100px;
+        text-align: center;
+    }
+    
+    .input-group__button {
+        font-size: 0;
+        min-width: 40px;
+    }
+    
+    .input-group__button::after {
+        content: '+';
+        font-size: 18px;
+        font-weight: bold;
+    }
+    
+    
+    .app__tasks-section {
+        padding: 15px;
     }
     
     .tasks-list__item {
-        flex-direction: column;
-        align-items: flex-start;
+        padding: 8px;
         gap: 8px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
     }
     
-    .tasks-list__actions {
-        align-self: flex-end;
+    .tasks-list__text {
+        flex: 1;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+    
+    .tasks-list__edit-input {
+        font-size: 14px;
+        padding: 3px 6px;
+    }
+    
+    .tasks-list__delete-button {
+        font-size: 0;
+        padding: 6px;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: auto;
+    }
+    
+    .tasks-list__delete-button::after {
+        content: '×';
+        font-size: 16px;
+        font-weight: bold;
+    }
+    
+    .app__empty-state {
+        padding: 30px 15px;
+    }
+    
+    .app__empty-icon {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+    
+    .app__empty-text {
+        font-size: 1rem;
     }
 }

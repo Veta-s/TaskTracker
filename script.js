@@ -144,16 +144,15 @@ class TaskTracker {
     updateStats() {
         const totalTasks = this.tasks.length;
         const completedTasks = this.tasks.filter(task => task.completed).length;
-        const pendingTasks = totalTasks - completedTasks;
 
-        document.getElementById('pendingTasks').textContent = pendingTasks;
+        document.getElementById('pendingTasks').textContent = totalTasks - completedTasks;
         
         // Показываем/скрываем кнопку "Clear completed"
         const clearCompletedBtn = document.getElementById('clearCompletedBtn');
         if (completedTasks > 0) {
-            clearCompletedBtn.style.display = 'block';
+            clearCompletedBtn.style.visibility = 'visible';
         } else {
-            clearCompletedBtn.style.display = 'none';
+            clearCompletedBtn.style.visibility = 'hidden';
         }
     }
 
