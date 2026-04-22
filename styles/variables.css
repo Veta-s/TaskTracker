@@ -1,0 +1,66 @@
+:root {
+    --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    --body-bg: #f5f7fa;
+    --text-color: #333;
+    --text-secondary: #666;
+    --text-light: #aaa;
+    
+    --card-bg: #ffffff;
+    --card-shadow: rgba(0, 0, 0, 0.05);
+    
+    --primary-color: #333;
+    --primary-hover: #555;
+    --primary-active: #222;
+    
+    --border-color: #eee;
+    --border-item: #f0f0f0;
+    --border-hover: #e0e0e0;
+    
+    --accent-color: #4dabf7;
+    --accent-hover: #339af0;
+    
+    --error-color: #dc3545;
+    --error-hover: #ff4d4f;
+    --error-active: #d9363e;
+    --error-light: #ff7875;
+    
+    --warning-color: #ffc107;
+    
+    --btn-secondary-bg: #f8f9fa;
+    --btn-secondary-hover: #f5f5f5;
+    --btn-secondary-active: #e9ecef;
+    
+    --toast-bg: #333;
+    --toast-text: #fff;
+    
+    --pixel-color: #333;
+    --pixel-red: #dc3545;
+}
+
+.dark-theme {
+    --bg-gradient: linear-gradient(135deg, #1a1a1a 0%, #2c3e50 100%);
+    --body-bg: #1a1a1a;
+    --text-color: #e0e0e0;
+    --text-secondary: #aaa;
+    --text-light: #888;
+    
+    --card-bg: #242424;
+    --card-shadow: rgba(0, 0, 0, 0.3);
+    
+    --primary-color: #4a4a4a;
+    --primary-hover: #666;
+    --primary-active: #333;
+    
+    --border-color: #444;
+    --border-item: #333;
+    --border-hover: #444;
+    
+    --btn-secondary-bg: #333;
+    --btn-secondary-hover: #444;
+    --btn-secondary-active: #222;
+    
+    --toast-bg: #444;
+    --toast-text: #fff;
+    
+    --pixel-color: #eee;
+}
