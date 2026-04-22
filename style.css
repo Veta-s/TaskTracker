@@ -4,12 +4,24 @@
     box-sizing: border-box;
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f5f5f5;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     color: #333;
     line-height: 1.6;
     overflow-x: hidden;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
 }
 
 /* Pixel Trail */
@@ -21,6 +33,7 @@ body {
     height: 100%;
     pointer-events: none;
     z-index: -1;
+    overflow: hidden;
 }
 
 .pixel-trail__pixel {
@@ -58,8 +71,21 @@ body {
 /* App Block */
 .app {
     max-width: 600px;
-    margin: 0 auto;
+    width: 100%;
     padding: 20px;
+    margin: 0;
+}
+
+@media (max-width: 1024px) {
+    .app {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 640px) {
+    .app {
+        padding: 15px;
+    }
 }
 
 /* App Header */
@@ -75,12 +101,20 @@ body {
     font-weight: 400;
 }
 
+@media (max-width: 480px) {
+    .app__title {
+        font-size: 3rem;
+    }
+}
+
 /* App Input Section */
 .app__input-section {
     background: white;
-    border: 1px solid #ddd;
-    padding: 20px;
-    margin-bottom: 20px;
+    border: none;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    border-radius: 12px;
 }
 
 /* Input Group */
@@ -91,10 +125,12 @@ body {
 
 .input-group__field {
     flex: 1;
-    padding: 10px;
-    border: 1px solid #ddd;
+    padding: 12px 15px;
+    border: 2px solid #eee;
     font-size: 16px;
     outline: none;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
 }
 
 .input-group__field:focus {
@@ -102,12 +138,14 @@ body {
 }
 
 .input-group__button {
-    padding: 10px 20px;
+    padding: 10px 25px;
     background: #333;
     color: white;
     border: none;
     cursor: pointer;
     font-size: 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
 }
 
 .input-group__button:hover {
@@ -140,9 +178,11 @@ body {
 /* App Filter Section */
 .app__filter-section {
     background: white;
-    border: 1px solid #ddd;
-    padding: 15px;
-    margin-bottom: 20px;
+    border: none;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    border-radius: 12px;
 }
 
 /* Filter Section */
@@ -151,6 +191,28 @@ body {
     align-items: center;
     justify-content: space-between;
     position: relative;
+    gap: 15px;
+}
+
+@media (max-width: 580px) {
+    .filter-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-section__counter {
+        justify-content: center;
+    }
+    
+    .filter-buttons {
+        order: 2;
+    }
+    
+    .filter-section__clear-button {
+        order: 3;
+        text-align: center;
+        min-width: 0;
+    }
 }
 
 /* Filter Buttons */
@@ -163,11 +225,13 @@ body {
 
 .filter-buttons__button {
     padding: 8px 16px;
-    border: 1px solid #ddd;
-    background: white;
+    border: 1px solid #eee;
+    background: #f8f9fa;
     cursor: pointer;
     font-size: 14px;
     margin: 0 5px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
 }
 
 .filter-buttons__button:hover {
@@ -214,9 +278,11 @@ body {
 /* App Tasks Section */
 .app__tasks-section {
     background: white;
-    border: 1px solid #ddd;
-    padding: 20px;
+    border: none;
+    padding: 25px;
     min-height: 200px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    border-radius: 12px;
 }
 
 /* Tasks List */
@@ -224,13 +290,61 @@ body {
     list-style: none;
 }
 
+
 .tasks-list__item {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px;
-    margin-bottom: 8px;
-    border: 1px solid #eee;
+    gap: 12px;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    animation: slideIn 0.3s ease-out forwards;
+    word-break: break-word;
+}
+
+.tasks-list__item:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transform: translateY(-2px);
+    border-color: #e0e0e0;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes highlight {
+    0% {
+        background-color: rgba(51, 51, 51, 0.1);
+        transform: scale(1.02);
+    }
+    100% {
+        background-color: transparent;
+        transform: scale(1);
+    }
+}
+
+@keyframes highlight-dark {
+    0% {
+        background-color: rgba(255, 255, 255, 0.1);
+        transform: scale(1.02);
+    }
+    100% {
+        background-color: transparent;
+        transform: scale(1);
+    }
+}
+
+.dark-theme .tasks-list__item[style*="highlight"] {
+    animation-name: highlight-dark !important;
 }
 
 .tasks-list__item--completed {
@@ -242,15 +356,15 @@ body {
 }
 
 .tasks-list__checkbox {
-    width: 18px;
-    height: 18px;
-    border: 1px solid #333;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #333;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: auto;
-    margin-bottom: auto;
+    border-radius: 6px;
+    transition: all 0.2s ease;
 }
 
 .tasks-list__checkbox--checked {
@@ -263,9 +377,32 @@ body {
     font-size: 12px;
 }
 
+.tasks-list__checkbox:focus,
+.tasks-list__text:focus {
+    outline: 2px solid #333;
+    outline-offset: 2px;
+}
+
+.dark-theme .tasks-list__checkbox:focus,
+.dark-theme .tasks-list__text:focus {
+    outline-color: #fff;
+}
+
 .tasks-list__text {
     flex: 1;
     font-size: 16px;
+    cursor: text;
+    padding: 4px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.tasks-list__text:hover {
+    background-color: #f5f5f5;
+}
+
+.dark-theme .tasks-list__text:hover {
+    background-color: #333;
 }
 
 .tasks-list__edit-input {
@@ -283,20 +420,22 @@ body {
 }
 
 .tasks-list__delete-button {
-    background: #333;
+    background: #ff4d4f;
     color: white;
     border: none;
-    padding: 5px 10px;
+    padding: 6px 12px;
     cursor: pointer;
     font-size: 12px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
 }
 
 .tasks-list__delete-button:hover {
-    background: #555;
+    background: #ff7875;
 }
 
 .tasks-list__delete-button:active {
-    background: #333;
+    background: #d9363e;
     transform: translateY(1px);
 }
 
@@ -323,122 +462,237 @@ body {
     font-size: 1.1rem;
 }
 
-/* Utility Classes */
+/* Dark Theme Support */
+body.dark-theme {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2c3e50 100%);
+    color: #e0e0e0;
+}
+
+.dark-theme .app__title {
+    color: #fff;
+}
+
+.dark-theme .app__input-section,
+.dark-theme .app__filter-section,
+.dark-theme .app__tasks-section {
+    background: #242424;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.dark-theme .input-group__field {
+    background: #333;
+    border-color: #444;
+    color: #fff;
+}
+
+.dark-theme .input-group__button {
+    background: #4a4a4a;
+}
+
+.dark-theme .input-group__button:hover {
+    background: #666;
+}
+
+.dark-theme .tasks-list__item {
+    border-color: #333;
+    color: #fff;
+}
+
+.dark-theme .tasks-list__checkbox {
+    border-color: #666;
+}
+
+.dark-theme .tasks-list__checkbox--checked {
+    background: #666;
+    border-color: #666;
+}
+
+.dark-theme .filter-buttons__button {
+    background: #333;
+    border-color: #444;
+    color: #aaa;
+}
+
+.dark-theme .filter-buttons__button--active {
+    background: #4a4a4a;
+    color: #fff;
+    border-color: #4a4a4a;
+}
+
+.dark-theme .filter-section__number {
+    color: #fff;
+}
+
+.dark-theme .filter-section__clear-button {
+    color: #aaa;
+}
+
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: white;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 1000;
+    font-size: 20px;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.dark-theme .theme-toggle {
+    background: #333;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.undo-toast {
+    position: fixed;
+    bottom: max(20px, env(safe-area-inset-bottom));
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    z-index: 1000;
+    width: auto;
+    max-width: 90%;
+    animation: slideUp 0.3s ease-out;
+}
+
+@media (max-width: 480px) {
+    .undo-toast {
+        width: 90%;
+        bottom: max(10px, env(safe-area-inset-bottom));
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}
+
+@keyframes slideUp {
+    from { transform: translate(-50%, 20px); opacity: 0; }
+    to { transform: translate(-50%, 0); opacity: 1; }
+}
+
+.undo-toast__button {
+    background: none;
+    border: none;
+    color: #4dabf7;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+.undo-toast__button:hover {
+    color: #339af0;
+    text-decoration: underline;
+}
+
+.dark-theme .undo-toast {
+    background: #444;
+}
+
+/* Theme Toggle Button Enhancement */
+.theme-toggle:hover {
+    transform: scale(1.1);
+}
+
+.theme-toggle:active {
+    transform: scale(0.9);
+}
+
+.undo-toast__button:active {
+    transform: scale(0.95);
+}
+
 .hidden {
     display: none !important;
 }
 
-/* Mobile 360px */
-@media (max-width: 360px) {
+/* Mobile 480px */
+@media (max-width: 480px) {
     .app {
         padding: 10px;
     }
     
-    .app__title {
-        font-size: 3rem;
+    .app__header {
+        margin-bottom: 20px;
     }
     
     .app__input-section {
         padding: 15px;
+        margin-bottom: 15px;
     }
     
     .input-group__field {
-        font-size: 14px;
-        padding: 8px;
-    }
-    
-    .input-group__button {
-        font-size: 14px;
-        padding: 8px 16px;
-    }
-    
-    .app__filter-section {
+        font-size: 16px; /* Prevent zoom on iOS */
         padding: 10px;
     }
     
-    .filter-section {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+    .input-group__button {
+        padding: 10px 15px;
     }
     
-    .filter-section__counter {
-        gap: 5px;
+    .app__filter-section {
+        padding: 15px;
         margin-bottom: 15px;
-        justify-content: center;
     }
     
-    .filter-section__number {
-        font-size: 1rem;
-    }
-    
-    .filter-section__label {
-        font-size: 0.8rem;
+    .filter-buttons {
+        width: 100%;
+        gap: 5px;
     }
     
     .filter-buttons__button {
-        padding: 6px 12px;
-        font-size: 12px;
-        margin: 0 3px;
+        flex: 1;
+        padding: 10px 5px;
+        margin: 0;
+        font-size: 13px;
+        white-space: nowrap;
+        min-height: 44px; /* Better touch target */
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-    
-    .filter-section__clear-button {
-        font-size: 11px;
-        padding: 10px 0;
-        min-width: 100px;
-        text-align: center;
-    }
-    
-    .input-group__button {
-        font-size: 0;
-        min-width: 40px;
-    }
-    
-    .input-group__button::after {
-        content: '+';
-        font-size: 18px;
-        font-weight: bold;
-    }
-    
     
     .app__tasks-section {
         padding: 15px;
     }
     
     .tasks-list__item {
-        padding: 8px;
-        gap: 8px;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
+        padding: 10px;
+        gap: 10px;
     }
     
     .tasks-list__text {
-        flex: 1;
-        font-size: 14px;
-        line-height: 1.4;
-    }
-    
-    .tasks-list__edit-input {
-        font-size: 14px;
-        padding: 3px 6px;
+        font-size: 15px;
     }
     
     .tasks-list__delete-button {
-        font-size: 0;
-        padding: 6px;
-        width: 24px;
-        height: 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: auto;
+        padding: 8px;
+        font-size: 12px;
+        min-height: 40px;
+        min-width: 60px;
     }
-    
-    .tasks-list__delete-button::after {
-        content: '×';
-        font-size: 16px;
-        font-weight: bold;
+
+    .theme-toggle {
+        top: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
     }
     
     .app__empty-state {
@@ -450,7 +704,47 @@ body {
         margin-bottom: 10px;
     }
     
-    .app__empty-text {
-        font-size: 1rem;
+    .undo-toast {
+        width: 90%;
+        bottom: max(10px, env(safe-area-inset-bottom));
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 360px) {
+    .input-group__button {
+        font-size: 0;
+        min-width: 44px;
+    }
+    
+    .input-group__button::after {
+        content: '+';
+        font-size: 20px;
+        font-weight: bold;
+    }
+    
+    .tasks-list__delete-button {
+        font-size: 0;
+        padding: 8px;
+        width: 44px;
+        height: 44px;
+        min-width: 0;
+        min-height: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .tasks-list__delete-button::after {
+        content: '×';
+        font-size: 18px;
+        font-weight: bold;
+    }
+    
+    .tasks-list__checkbox {
+        width: 28px;
+        height: 28px;
+        flex-shrink: 0;
     }
 }

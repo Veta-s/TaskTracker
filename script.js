@@ -1,6 +1,29 @@
+class StorageService {
+    static getTasks() {
+        try {
+            return JSON.parse(localStorage.getItem('tasks')) || [];
+        } catch (e) {
+            console.error('Failed to parse tasks from localStorage', e);
+            return [];
+        }
+    }
+
+    static saveTasks(tasks) {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    static getTheme() {
+        return localStorage.getItem('theme') || 'light';
+    }
+
+    static saveTheme(theme) {
+        localStorage.setItem('theme', theme);
+    }
+}
+
 class TaskTracker {
     constructor() {
-        this.tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        this.tasks = StorageService.getTasks();
         this.currentFilter = 'all';
         this.init();
     }
@@ -17,12 +40,60 @@ class TaskTracker {
         const taskInput = document.getElementById('taskInput');
         const addTaskBtn = document.getElementById('addTaskBtn');
         const filterButtons = document.querySelectorAll('.filter-buttons__button');
+        const themeToggle = document.getElementById('themeToggle');
+        const tasksList = document.getElementById('tasksList');
+
+        // Переключение темы
+        themeToggle.addEventListener('click', () => this.toggleTheme());
+
+        // Проверка сохраненной темы
+        if (StorageService.getTheme() === 'dark') {
+            document.body.classList.add('dark-theme');
+            themeToggle.textContent = '☀️';
+        }
 
         // Добавление задачи
         addTaskBtn.addEventListener('click', () => this.addTask());
         taskInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 this.addTask();
+            }
+        });
+
+        // Делегирование событий в списке задач
+        tasksList.addEventListener('click', (e) => {
+            const item = e.target.closest('.tasks-list__item');
+            if (!item) return;
+            const id = parseInt(item.dataset.id);
+
+            if (e.target.closest('.tasks-list__checkbox')) {
+                this.toggleTask(id);
+            } else if (e.target.closest('.tasks-list__delete-button')) {
+                this.deleteTask(id);
+            }
+        });
+
+        tasksList.addEventListener('dblclick', (e) => {
+            const item = e.target.closest('.tasks-list__item');
+            if (item && e.target.classList.contains('tasks-list__text')) {
+                this.startEditTask(parseInt(item.dataset.id));
+            }
+        });
+
+        // Поддержка клавиатуры для чекбоксов и текста (редактирование)
+        tasksList.addEventListener('keydown', (e) => {
+            const item = e.target.closest('.tasks-list__item');
+            if (!item) return;
+            const id = parseInt(item.dataset.id);
+
+            if (e.key === 'Enter' || e.key === ' ') {
+                if (e.target.closest('.tasks-list__checkbox')) {
+                    e.preventDefault();
+                    this.toggleTask(id);
+                } else if (e.target.classList.contains('tasks-list__text')) {
+                    e.preventDefault();
+                    this.startEditTask(id);
+                }
             }
         });
 
@@ -43,15 +114,18 @@ class TaskTracker {
         this.initInteractiveIcon();
     }
 
+    toggleTheme() {
+        const isDark = document.body.classList.toggle('dark-theme');
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.textContent = isDark ? '☀️' : '🌙';
+        StorageService.saveTheme(isDark ? 'dark' : 'light');
+    }
+
     addTask() {
         const taskInput = document.getElementById('taskInput');
         const text = taskInput.value.trim();
 
-        if (text === '') {
-            return;
-        }
-
-        if (text.length > 50) {
+        if (text === '' || text.length > 50) {
             return;
         }
 
@@ -67,6 +141,15 @@ class TaskTracker {
         this.render();
         this.updateStats();
         
+        // Анимация новой задачи
+        const firstItem = document.querySelector('.tasks-list__item');
+        if (firstItem) {
+            firstItem.style.animation = 'none';
+            firstItem.offsetHeight; // trigger reflow
+            const animationName = document.body.classList.contains('dark-theme') ? 'highlight-dark' : 'highlight';
+            firstItem.style.animation = `${animationName} 1s ease-out`;
+        }
+        
         taskInput.value = '';
     }
 
@@ -81,10 +164,59 @@ class TaskTracker {
     }
 
     deleteTask(id) {
-        this.tasks = this.tasks.filter(t => t.id !== id);
-        this.saveTasks();
-        this.render();
-        this.updateStats();
+        const taskItem = document.querySelector(`[data-id="${id}"]`);
+        if (!taskItem) {
+            this.tasks = this.tasks.filter(t => t.id !== id);
+            this.saveTasks();
+            this.render();
+            this.updateStats();
+            return;
+        }
+
+        // Анимация удаления
+        taskItem.style.transform = 'translateX(50px)';
+        taskItem.style.opacity = '0';
+        
+        // Показываем кнопку Undo (упрощенная реализация через временное удаление)
+        const deletedTask = this.tasks.find(t => t.id === id);
+        const taskIndex = this.tasks.indexOf(deletedTask);
+        
+        setTimeout(() => {
+            this.tasks = this.tasks.filter(t => t.id !== id);
+            this.saveTasks();
+            this.render();
+            this.updateStats();
+            
+            this.showUndoToast(() => {
+                this.tasks.splice(taskIndex, 0, deletedTask);
+                this.saveTasks();
+                this.render();
+                this.updateStats();
+            });
+        }, 300);
+    }
+
+    showUndoToast(undoCallback) {
+        const existingToast = document.querySelector('.undo-toast');
+        if (existingToast) existingToast.remove();
+
+        const toast = document.createElement('div');
+        toast.className = 'undo-toast';
+        toast.innerHTML = `
+            <span>Task deleted</span>
+            <button class="undo-toast__button">Undo</button>
+        `;
+        
+        document.body.appendChild(toast);
+        
+        toast.querySelector('.undo-toast__button').onclick = () => {
+            undoCallback();
+            toast.remove();
+        };
+
+        setTimeout(() => {
+            if (toast.parentNode) toast.remove();
+        }, 5000);
     }
 
     setFilter(filter) {
@@ -129,11 +261,14 @@ class TaskTracker {
         tasksList.innerHTML = filteredTasks.map(task => `
             <li class="tasks-list__item ${task.completed ? 'tasks-list__item--completed' : ''}" data-id="${task.id}">
                 <div class="tasks-list__checkbox ${task.completed ? 'tasks-list__checkbox--checked' : ''}" 
-                     onclick="taskTracker.toggleTask(${task.id})">
+                     role="checkbox" 
+                     aria-checked="${task.completed}" 
+                     tabindex="0"
+                     aria-label="Toggle task status">
                 </div>
-                <span class="tasks-list__text" ondblclick="taskTracker.startEditTask(${task.id})">${this.escapeHtml(task.text)}</span>
+                <span class="tasks-list__text" tabindex="0">${this.escapeHtml(task.text)}</span>
                 <div class="tasks-list__actions">
-                    <button class="tasks-list__delete-button" onclick="taskTracker.deleteTask(${task.id})">
+                    <button class="tasks-list__delete-button" aria-label="Delete task">
                         Delete
                     </button>
                 </div>
@@ -157,7 +292,7 @@ class TaskTracker {
     }
 
     saveTasks() {
-        localStorage.setItem('tasks', JSON.stringify(this.tasks));
+        StorageService.saveTasks(this.tasks);
     }
 
     escapeHtml(text) {
@@ -197,17 +332,21 @@ class TaskTracker {
         input.focus();
         input.select();
         
+        // Предотвращаем срабатывание blur при клике на сам input
+        input.addEventListener('mousedown', (e) => e.stopPropagation());
+
         // Обработчики событий
         const finishEdit = () => {
+            if (input._isFinishing) return;
+            input._isFinishing = true;
+
             const newText = input.value.trim();
             if (newText && newText !== task.text) {
                 task.text = newText;
                 this.saveTasks();
-                this.render();
-                this.updateStats();
-            } else {
-                this.render();
             }
+            this.render();
+            this.updateStats();
         };
         
         const cancelEdit = () => {
