@@ -3,11 +3,11 @@
     position: fixed;
     top: 0;
     left: 0;
+    z-index: -1;
     width: 100%;
     height: 100%;
-    pointer-events: none;
-    z-index: -1;
     overflow: hidden;
+    pointer-events: none;
 }
 
 .pixel-trail__pixel {
@@ -18,47 +18,49 @@
     border-radius: 50%;
     opacity: 0.8;
     animation: scatter 2s ease-out forwards;
+
     --scatter-x: 0px;
     --scatter-y: 0px;
 }
 
 .pixel-trail__pixel--red {
-    background: var(--pixel-red);
     width: 4px;
     height: 4px;
+    background: var(--pixel-red);
     animation: scatter 1.5s ease-out forwards;
+
     --scatter-x: 0px;
     --scatter-y: 0px;
 }
 
 /* App Block */
 .app {
-    max-width: 600px;
     width: 100%;
+    max-width: 600px;
     padding: 20px;
     margin: 0;
 }
 
 .app__header {
-    text-align: center;
     margin-bottom: 30px;
+    text-align: center;
 }
 
 .app__title {
     font-family: 'Jacquard 12', cursive;
-    color: var(--text-color);
     font-size: 4rem;
     font-weight: 400;
+    color: var(--text-color);
 }
 
 /* App Input Section */
 .app__input-section {
-    background: var(--card-bg);
-    border: none;
     padding: 25px;
     margin-bottom: 25px;
-    box-shadow: 0 10px 25px var(--card-shadow);
+    background: var(--card-bg);
+    border: none;
     border-radius: 12px;
+    box-shadow: 0 10px 25px var(--card-shadow);
 }
 
 .input-group {
@@ -69,11 +71,11 @@
 .input-group__field {
     flex: 1;
     padding: 12px 15px;
-    border: 2px solid var(--border-color);
-    background: var(--card-bg);
-    color: var(--text-color);
     font-size: 16px;
+    color: var(--text-color);
     outline: none;
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
     border-radius: 8px;
     transition: border-color 0.3s ease;
 }
@@ -96,11 +98,11 @@
 
 .input-group__button {
     padding: 10px 25px;
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    cursor: pointer;
     font-size: 16px;
+    color: white;
+    cursor: pointer;
+    background: var(--primary-color);
+    border: none;
     border-radius: 8px;
     transition: all 0.3s ease;
 }
@@ -116,26 +118,26 @@
 
 /* App Filter Section */
 .app__filter-section {
-    background: var(--card-bg);
-    border: none;
     padding: 20px;
     margin-bottom: 25px;
-    box-shadow: 0 10px 25px var(--card-shadow);
+    background: var(--card-bg);
+    border: none;
     border-radius: 12px;
+    box-shadow: 0 10px 25px var(--card-shadow);
 }
 
 .filter-section {
+    position: relative;
     display: flex;
+    gap: 15px;
     align-items: center;
     justify-content: space-between;
-    position: relative;
-    gap: 15px;
 }
 
 .filter-section__counter {
     display: flex;
-    align-items: center;
     gap: 8px;
+    align-items: center;
 }
 
 .filter-section__number {
@@ -158,12 +160,12 @@
 
 .filter-buttons__button {
     padding: 8px 16px;
-    border: 1px solid var(--border-color);
-    background: var(--btn-secondary-bg);
+    margin: 0 5px;
+    font-size: 14px;
     color: var(--text-color);
     cursor: pointer;
-    font-size: 14px;
-    margin: 0 5px;
+    background: var(--btn-secondary-bg);
+    border: 1px solid var(--border-color);
     border-radius: 6px;
     transition: all 0.2s ease;
 }
@@ -178,20 +180,20 @@
 }
 
 .filter-buttons__button--active {
-    background: var(--primary-color);
     color: white;
+    background: var(--primary-color);
     border-color: var(--primary-color);
 }
 
 .filter-section__clear-button {
-    color: var(--text-secondary);
-    border: none;
-    background: transparent;
-    padding: 8px 0;
-    cursor: pointer;
-    font-size: 0.9rem;
     min-width: 120px;
+    padding: 8px 0;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
     text-align: right;
+    cursor: pointer;
+    background: transparent;
+    border: none;
 }
 
 .filter-section__clear-button:hover {
@@ -200,12 +202,12 @@
 
 /* App Tasks Section */
 .app__tasks-section {
+    min-height: 200px;
+    padding: 25px;
     background: var(--card-bg);
     border: none;
-    padding: 25px;
-    min-height: 200px;
-    box-shadow: 0 10px 25px var(--card-shadow);
     border-radius: 12px;
+    box-shadow: 0 10px 25px var(--card-shadow);
 }
 
 .tasks-list {
@@ -214,22 +216,22 @@
 
 .tasks-list__item {
     display: flex;
-    align-items: center;
     gap: 12px;
+    align-items: center;
     padding: 12px;
     margin-bottom: 12px;
+    color: var(--text-color);
+    overflow-wrap: break-word;
     border: 1px solid var(--border-item);
     border-radius: 8px;
     transition: all 0.3s ease;
     animation: slideIn 0.3s ease-out forwards;
-    word-break: break-word;
-    color: var(--text-color);
 }
 
 .tasks-list__item:hover {
+    border-color: var(--border-hover);
     box-shadow: 0 4px 12px var(--card-shadow);
     transform: translateY(-2px);
-    border-color: var(--border-hover);
 }
 
 .dark-theme .tasks-list__item[style*="animation"] {
@@ -245,26 +247,26 @@
 }
 
 .tasks-list__checkbox {
-    width: 22px;
-    height: 22px;
-    border: 2px solid var(--primary-color);
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    background: transparent;
+    border: 2px solid var(--primary-color);
     border-radius: 6px;
     transition: all 0.2s ease;
-    background: transparent;
 }
 
 .tasks-list__checkbox--checked {
-    background: var(--primary-color);
     color: white;
+    background: var(--primary-color);
 }
 
 .tasks-list__checkbox--checked::after {
-    content: '✓';
     font-size: 12px;
+    content: '✓';
 }
 
 .tasks-list__checkbox:focus,
@@ -275,9 +277,9 @@
 
 .tasks-list__text {
     flex: 1;
+    padding: 4px;
     font-size: 16px;
     cursor: text;
-    padding: 4px;
     border-radius: 4px;
     transition: background-color 0.2s ease;
 }
@@ -288,12 +290,12 @@
 
 .tasks-list__edit-input {
     flex: 1;
-    font-size: 16px;
-    border: 1px solid var(--primary-color);
     padding: 4px 8px;
+    font-size: 16px;
+    color: var(--text-color);
     outline: none;
     background: var(--card-bg);
-    color: var(--text-color);
+    border: 1px solid var(--primary-color);
 }
 
 .tasks-list__actions {
@@ -302,12 +304,12 @@
 }
 
 .tasks-list__delete-button {
-    background: var(--error-color);
-    color: white;
-    border: none;
     padding: 6px 12px;
-    cursor: pointer;
     font-size: 12px;
+    color: white;
+    cursor: pointer;
+    background: var(--error-color);
+    border: none;
     border-radius: 6px;
     transition: all 0.2s ease;
 }
@@ -318,17 +320,20 @@
 
 /* App Empty State */
 .app__empty-state {
-    text-align: center;
     padding: 40px 20px;
     color: var(--text-secondary);
+    text-align: center;
 }
 
 .app__empty-icon {
-    font-size: 3rem;
-    margin-bottom: 15px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
     display: inline-block;
+    padding: 0;
+    margin-bottom: 15px;
+    font-size: 3rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    transition: transform 0.3s ease;
 }
 
 .app__empty-icon:hover {
@@ -344,20 +349,20 @@
     position: fixed;
     top: 20px;
     right: 20px;
-    background: var(--card-bg);
-    color: var(--text-color);
-    border: none;
-    padding: 10px;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 4px 12px var(--card-shadow);
     z-index: 1000;
-    font-size: 20px;
-    width: 45px;
-    height: 45px;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 45px;
+    height: 45px;
+    padding: 10px;
+    font-size: 20px;
+    color: var(--text-color);
+    cursor: pointer;
+    background: var(--card-bg);
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px var(--card-shadow);
     transition: all 0.3s ease;
 }
 
@@ -369,29 +374,29 @@
     position: fixed;
     bottom: max(20px, env(safe-area-inset-bottom));
     left: 50%;
-    transform: translateX(-50%);
-    background: var(--toast-bg);
-    color: var(--toast-text);
-    padding: 12px 24px;
-    border-radius: 50px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    box-shadow: var(--card-shadow);
     z-index: 1000;
+    display: flex;
+    gap: 15px;
+    align-items: center;
     width: auto;
     max-width: 90%;
+    padding: 12px 24px;
+    color: var(--toast-text);
+    background: var(--toast-bg);
+    border-radius: 50px;
+    box-shadow: var(--card-shadow);
+    transform: translateX(-50%);
     animation: slideUp 0.3s ease-out;
 }
 
 .undo-toast__button {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    cursor: pointer;
     background: none;
     border: none;
-    color: var(--accent-color);
-    cursor: pointer;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 0.8rem;
 }
 
 .undo-toast__button:hover {
@@ -400,13 +405,13 @@
 }
 
 /* Media Queries */
-@media (max-width: 1024px) {
+@media (width <= 1024px) {
     .app {
         padding: 15px;
     }
 }
 
-@media (max-width: 580px) {
+@media (width <= 580px) {
     .filter-section {
         flex-direction: column;
         align-items: stretch;
@@ -422,12 +427,12 @@
     
     .filter-section__clear-button {
         order: 3;
-        text-align: center;
         min-width: 0;
+        text-align: center;
     }
 }
 
-@media (max-width: 480px) {
+@media (width <= 480px) {
     .app {
         padding: 10px;
     }
@@ -445,9 +450,9 @@
         margin-bottom: 15px;
     }
     
-    .input-group__field {
-        font-size: 16px; 
+    .input-group__field { 
         padding: 10px;
+        font-size: 16px;
     }
     
     .input-group__button {
@@ -460,20 +465,20 @@
     }
     
     .filter-buttons {
-        width: 100%;
         gap: 5px;
+        width: 100%;
     }
     
     .filter-buttons__button {
+        display: flex;
         flex: 1;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
         padding: 10px 5px;
         margin: 0;
         font-size: 13px;
         white-space: nowrap;
-        min-height: 44px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
     }
     
     .app__tasks-section {
@@ -481,8 +486,8 @@
     }
     
     .tasks-list__item {
-        padding: 10px;
         gap: 10px;
+        padding: 10px;
     }
     
     .tasks-list__text {
@@ -490,10 +495,10 @@
     }
     
     .tasks-list__delete-button {
+        min-width: 60px;
+        min-height: 40px;
         padding: 8px;
         font-size: 12px;
-        min-height: 40px;
-        min-width: 60px;
     }
 
     .theme-toggle {
@@ -508,51 +513,51 @@
     }
     
     .app__empty-icon {
-        font-size: 2.5rem;
         margin-bottom: 10px;
+        font-size: 2.5rem;
     }
     
     .undo-toast {
-        width: 90%;
         bottom: max(10px, env(safe-area-inset-bottom));
+        width: 90%;
         padding: 10px 20px;
         font-size: 14px;
     }
 }
 
-@media (max-width: 360px) {
+@media (width <= 360px) {
     .input-group__button {
-        font-size: 0;
         min-width: 44px;
+        font-size: 0;
     }
     
     .input-group__button::after {
-        content: '+';
         font-size: 20px;
         font-weight: bold;
+        content: '+';
     }
     
     .tasks-list__delete-button {
-        font-size: 0;
-        padding: 8px;
-        width: 44px;
-        height: 44px;
-        min-width: 0;
-        min-height: 0;
         display: flex;
         align-items: center;
         justify-content: center;
+        width: 44px;
+        min-width: 0;
+        height: 44px;
+        min-height: 0;
+        padding: 8px;
+        font-size: 0;
     }
     
     .tasks-list__delete-button::after {
-        content: '×';
         font-size: 18px;
         font-weight: bold;
+        content: '×';
     }
     
     .tasks-list__checkbox {
+        flex-shrink: 0;
         width: 28px;
         height: 28px;
-        flex-shrink: 0;
     }
 }
