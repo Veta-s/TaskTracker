@@ -233,11 +233,12 @@
 .tasks-list__item {
     display: flex;
     gap: 12px;
-    align-items: center;
+    align-items: flex-start;
     padding: 12px;
     margin-bottom: 12px;
     color: var(--text-color);
     overflow-wrap: break-word;
+    word-break: break-word;
     border: 1px solid var(--border-item);
     border-radius: 8px;
     transition: all 0.3s ease;
@@ -272,6 +273,7 @@
     justify-content: center;
     width: 22px;
     height: 22px;
+    margin-top: 2px;
     cursor: pointer;
     background: transparent;
     border: 2px solid var(--primary-color);
@@ -328,6 +330,7 @@
 
 .tasks-list__delete-button {
     padding: 6px 12px;
+    margin-top: 2px;
     font-size: 12px;
     color: white;
     cursor: pointer;
