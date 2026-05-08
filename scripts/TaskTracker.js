@@ -124,7 +124,7 @@ export class TaskTracker {
 
         this.tasks.unshift(task);
         this.saveTasks();
-        this.render();
+        this.render(task.id);
         this.updateStats();
         this.handleInput(taskInput); 
         
@@ -226,7 +226,7 @@ export class TaskTracker {
         }
     }
 
-    render() {
+    render(newTaskId = null) {
         const tasksList = document.getElementById('tasksList');
         const emptyState = document.getElementById('emptyState');
         const tasksSection = document.querySelector('.app__tasks-section');
@@ -243,7 +243,7 @@ export class TaskTracker {
         emptyState.classList.add('hidden');
         
         tasksList.innerHTML = filteredTasks.map(task => `
-            <li class="tasks-list__item ${task.completed ? 'tasks-list__item--completed' : ''}" data-id="${task.id}">
+            <li class="tasks-list__item ${task.completed ? 'tasks-list__item--completed' : ''} ${task.id === newTaskId ? 'tasks-list__item--new' : ''}" data-id="${task.id}">
                 <div class="tasks-list__checkbox ${task.completed ? 'tasks-list__checkbox--checked' : ''}" 
                      role="checkbox" 
                      aria-checked="${task.completed}" 
