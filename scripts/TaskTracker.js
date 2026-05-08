@@ -352,23 +352,29 @@ export class TaskTracker {
         
         input.addEventListener('input', () => this.handleInput(input));
         input.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                input._isCancelling = true;
+                cancelEdit();
+                return;
+            }
+            if (e.key === 'Enter') {
+                finishEdit();
+                return;
+            }
+
             if (input.value.length >= 50 && 
                 e.key !== 'Backspace' && 
                 e.key !== 'Delete' && 
                 e.key !== 'ArrowLeft' && 
                 e.key !== 'ArrowRight' &&
-                !e.ctrlKey && !e.metaKey && e.key !== 'Enter' && e.key !== 'Escape') {
+                !e.ctrlKey && !e.metaKey) {
                 this.shakeInput(input);
             }
         });
 
-        input.addEventListener('blur', finishEdit);
-        input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                finishEdit();
-            } else if (e.key === 'Escape') {
-                cancelEdit();
-            }
+        input.addEventListener('blur', () => {
+            if (input._isCancelling) return;
+            finishEdit();
         });
     }
 
