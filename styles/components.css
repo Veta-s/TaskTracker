@@ -202,12 +202,28 @@
 
 /* App Tasks Section */
 .app__tasks-section {
-    min-height: 200px;
+    max-height: 400px;
     padding: 25px;
+    overflow-y: auto;
     background: var(--card-bg);
     border: none;
     border-radius: 12px;
     box-shadow: 0 10px 25px var(--card-shadow);
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) transparent;
+}
+
+.app__tasks-section::-webkit-scrollbar {
+    width: 6px;
+}
+
+.app__tasks-section::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.app__tasks-section::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 20px;
 }
 
 .tasks-list {
