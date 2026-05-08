@@ -14,14 +14,20 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     min-height: 100dvh;
+    padding: 80px 20px 40px;
     overflow-x: hidden;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: var(--text-color);
     touch-action: manipulation;
     background: var(--bg-gradient);
+}
+
+@media (height <= 600px) {
+    body {
+        padding-top: 40px;
+    }
 }
 
 .hidden {

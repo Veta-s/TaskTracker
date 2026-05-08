@@ -24,6 +24,7 @@ export class TaskTracker {
         const filterButtons = document.querySelectorAll('.filter-buttons__button');
         const themeToggle = document.getElementById('themeToggle');
         const tasksList = document.getElementById('tasksList');
+        const selectAllBtn = document.getElementById('selectAllBtn');
 
         themeToggle.addEventListener('click', () => this.toggleTheme());
 
@@ -96,6 +97,10 @@ export class TaskTracker {
         clearCompletedBtn.addEventListener('click', () => {
             this.clearCompletedTasks();
         });
+
+        if (selectAllBtn) {
+            selectAllBtn.addEventListener('click', () => this.selectAllTasks());
+        }
 
         this.initInteractiveIcon();
     }
@@ -272,6 +277,17 @@ export class TaskTracker {
         } else {
             clearCompletedBtn.style.visibility = 'hidden';
         }
+
+        const selectAllBtn = document.getElementById('selectAllBtn');
+        if (selectAllBtn) {
+            if (totalTasks > 0) {
+                selectAllBtn.style.display = ''; 
+                const allCompleted = totalTasks === completedTasks;
+                selectAllBtn.textContent = allCompleted ? 'Unselect All' : 'Select All';
+            } else {
+                selectAllBtn.style.display = 'none';
+            }
+        }
     }
 
     saveTasks() {
@@ -307,6 +323,19 @@ export class TaskTracker {
 
     clearCompletedTasks() {
         this.tasks = this.tasks.filter(task => !task.completed);
+        this.saveTasks();
+        this.render();
+        this.updateStats();
+    }
+
+    selectAllTasks() {
+        if (this.tasks.length === 0) return;
+
+        const allCompleted = this.tasks.every(task => task.completed);
+        this.tasks.forEach(task => {
+            task.completed = !allCompleted;
+        });
+
         this.saveTasks();
         this.render();
         this.updateStats();

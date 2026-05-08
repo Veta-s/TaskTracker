@@ -37,7 +37,7 @@
 .app {
     width: 100%;
     max-width: 600px;
-    padding: 20px;
+    padding: 0;
     margin: 0;
 }
 
@@ -129,13 +129,22 @@
 .filter-section {
     position: relative;
     display: flex;
+    flex-wrap: wrap;
     gap: 15px;
     align-items: center;
     justify-content: space-between;
 }
 
+.filter-section__left {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+}
+
 .filter-section__counter {
     display: flex;
+    flex-shrink: 0;
     gap: 8px;
     align-items: center;
 }
@@ -153,14 +162,16 @@
 
 .filter-buttons {
     display: flex;
+    flex: 1;
+    flex-wrap: wrap;
     gap: 10px;
     align-items: center;
     justify-content: center;
 }
 
 .filter-buttons__button {
-    padding: 8px 16px;
-    margin: 0 5px;
+    padding: 8px 12px;
+    margin: 0;
     font-size: 14px;
     color: var(--text-color);
     cursor: pointer;
@@ -168,6 +179,12 @@
     border: 1px solid var(--border-color);
     border-radius: 6px;
     transition: all 0.2s ease;
+}
+
+.filter-buttons__button--select-all {
+    width: 100%;
+    padding: 6px 10px;
+    font-size: 12px;
 }
 
 .filter-buttons__button:hover:not(.filter-buttons__button--active) {
@@ -191,6 +208,7 @@
 }
 
 .filter-section__clear-button {
+    flex-shrink: 0;
     min-width: 120px;
     padding: 8px 0;
     font-size: 0.9rem;
@@ -437,15 +455,16 @@
 
 /* Media Queries */
 @media (width <= 1024px) {
-    .app {
-        padding: 15px;
-    }
 }
 
 @media (width <= 580px) {
     .filter-section {
         flex-direction: column;
         align-items: stretch;
+    }
+    
+    .filter-section__left {
+        align-items: center;
     }
     
     .filter-section__counter {
@@ -464,10 +483,6 @@
 }
 
 @media (width <= 480px) {
-    .app {
-        padding: 10px;
-    }
-    
     .app__header {
         margin-bottom: 20px;
     }
@@ -496,20 +511,18 @@
     }
     
     .filter-buttons {
-        gap: 5px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
         width: 100%;
     }
     
     .filter-buttons__button {
-        display: flex;
-        flex: 1;
-        align-items: center;
-        justify-content: center;
+        width: 100%;
         min-height: 44px;
-        padding: 10px 5px;
+        padding: 10px;
         margin: 0;
-        font-size: 13px;
-        white-space: nowrap;
+        font-size: 14px;
     }
     
     .app__tasks-section {
