@@ -170,8 +170,13 @@
     transition: all 0.2s ease;
 }
 
-.filter-buttons__button:hover {
+.filter-buttons__button:hover:not(.filter-buttons__button--active) {
     background: var(--btn-secondary-hover);
+}
+
+.filter-buttons__button--active:hover {
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
 }
 
 .filter-buttons__button:active {
