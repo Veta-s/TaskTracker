@@ -181,11 +181,6 @@
     transition: all 0.2s ease;
 }
 
-.filter-buttons__button--select-all {
-    width: 100%;
-    padding: 6px 10px;
-    font-size: 12px;
-}
 
 .filter-buttons__button:hover:not(.filter-buttons__button--active) {
     background: var(--btn-secondary-hover);
@@ -207,46 +202,38 @@
     border-color: var(--primary-color);
 }
 
+.filter-section__select-all-button,
 .filter-section__clear-button {
     flex-shrink: 0;
     min-width: 120px;
     padding: 8px 0;
     font-size: 0.9rem;
     color: var(--text-secondary);
-    text-align: right;
     cursor: pointer;
     background: transparent;
     border: none;
 }
 
+.filter-section__select-all-button {
+    text-align: left;
+}
+
+.filter-section__clear-button {
+    text-align: right;
+}
+
+.filter-section__select-all-button:hover,
 .filter-section__clear-button:hover {
     color: var(--error-color);
 }
 
 /* App Tasks Section */
 .app__tasks-section {
-    max-height: 400px;
     padding: 25px;
-    overflow-y: auto;
     background: var(--card-bg);
     border: none;
     border-radius: 12px;
     box-shadow: 0 10px 25px var(--card-shadow);
-    scrollbar-width: thin;
-    scrollbar-color: var(--primary-color) transparent;
-}
-
-.app__tasks-section::-webkit-scrollbar {
-    width: 6px;
-}
-
-.app__tasks-section::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.app__tasks-section::-webkit-scrollbar-thumb {
-    background-color: var(--primary-color);
-    border-radius: 20px;
 }
 
 .tasks-list {
@@ -475,6 +462,7 @@
         order: 2;
     }
     
+    .filter-section__select-all-button,
     .filter-section__clear-button {
         order: 3;
         min-width: 0;
