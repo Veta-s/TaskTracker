@@ -77,10 +77,7 @@ export class TaskTracker {
             const id = parseInt(item.dataset.id);
 
             if (e.key === 'Enter' || e.key === ' ') {
-                if (e.target.closest('.tasks-list__checkbox')) {
-                    e.preventDefault();
-                    this.toggleTask(id);
-                } else if (e.target.classList.contains('tasks-list__text')) {
+                if (e.target.classList.contains('tasks-list__text')) {
                     e.preventDefault();
                     this.startEditTask(id);
                 }
@@ -249,12 +246,10 @@ export class TaskTracker {
         
         tasksList.innerHTML = filteredTasks.map(task => `
             <li class="tasks-list__item ${task.completed ? 'tasks-list__item--completed' : ''} ${task.id === newTaskId ? 'tasks-list__item--new' : ''}" data-id="${task.id}">
-                <div class="tasks-list__checkbox ${task.completed ? 'tasks-list__checkbox--checked' : ''}" 
-                     role="checkbox" 
-                     aria-checked="${task.completed}" 
-                     tabindex="0"
+                <input type="checkbox" 
+                     class="tasks-list__checkbox" 
+                     ${task.completed ? 'checked' : ''}
                      aria-label="Toggle task status">
-                </div>
                 <span class="tasks-list__text" tabindex="0">${this.escapeHtml(task.text)}</span>
                 <div class="tasks-list__actions">
                     <button class="tasks-list__delete-button" aria-label="Delete task">
